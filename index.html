@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroLearn AI | Genera ejercicios al instante</title>
+  <meta
+    name="description"
+    content="Plataforma de aprendizaje con IA que genera ejercicios personalizados al instante para cualquier tema."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Preloader inicial mientras la experiencia termina de cargarse -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <div class="preloader__ring"></div>
+      <p>Cargando tu experiencia de aprendizaje con IA...</p>
+    </div>
+  </div>
+
+  <div class="page-bg"></div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#hero" class="brand">
+        <span class="brand__mark">NL</span>
+        <span class="brand__text">NeuroLearn AI</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navegación principal">
+        <a href="#features">Funciones</a>
+        <a href="#how-it-works">Cómo funciona</a>
+        <a href="#demo">Demo</a>
+        <a href="#contact">Contacto</a>
+      </nav>
+
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar entre modo oscuro y claro">
+        <span class="theme-toggle__text">Modo claro</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section" id="hero">
+      <div class="container hero__grid">
+        <div class="hero__content reveal">
+          <p class="section-tag">Aprendizaje impulsado por IA</p>
+          <h1>Aprende más rápido con ejercicios generados por IA</h1>
+          <p class="hero__description">
+            Crea actividades de práctica en segundos, adáptalas a cualquier tema y mantén a
+            tus estudiantes motivados con experiencias dinámicas pensadas para la educación actual.
+          </p>
+
+          <div class="hero__actions">
+            <a href="#demo" class="button button--primary">Pruébalo ahora</a>
+            <a href="#features" class="button button--ghost">Ver funciones</a>
+          </div>
+
+          <ul class="hero__stats" aria-label="Datos destacados de la plataforma">
+            <li>
+              <strong>30k+</strong>
+              <span>Ejercicios generados</span>
+            </li>
+            <li>
+              <strong>120+</strong>
+              <span>Temas de aprendizaje</span>
+            </li>
+            <li>
+              <strong>95%</strong>
+              <span>Valoraciones positivas</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Panel visual tipo dashboard para reforzar el mensaje del producto -->
+        <div class="hero__visual reveal">
+          <div class="hero-card hero-card--main">
+            <p class="hero-card__label">Generación en vivo</p>
+            <h2>Tema: Álgebra</h2>
+            <p>Crea ejercicios adaptativos, pistas y mini cuestionarios al instante.</p>
+            <div class="hero-card__lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div class="hero-card hero-card--small float-card">
+            <p class="hero-card__label">Pista IA</p>
+            <strong>Resuelve paso a paso</strong>
+          </div>
+
+          <div class="hero-card hero-card--small alt float-card">
+            <p class="hero-card__label">Dificultad</p>
+            <strong>Ajuste automático</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features section" id="features">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-tag">Funciones</p>
+          <h2>Diseñada para estudiantes y docentes actuales</h2>
+          <p>
+            Todo lo que necesitas para crear, personalizar y entregar actividades inteligentes.
+          </p>
+        </div>
+
+        <div class="features__grid">
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">01</div>
+            <h3>Generación instantánea</h3>
+            <p>Escribe cualquier tema y genera ejercicios listos para usar en segundos.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">02</div>
+            <h3>Dificultad adaptativa</h3>
+            <p>Ajusta la complejidad para principiantes, nivel intermedio o avanzado.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">03</div>
+            <h3>Práctica en varios formatos</h3>
+            <p>Crea cuestionarios, respuestas cortas y ejercicios de repaso desde una sola idea.</p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">04</div>
+            <h3>Flujo ágil para docentes</h3>
+            <p>Ahorra tiempo de preparación sin perder frescura, relevancia ni dinamismo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="section-tag">Cómo funciona</p>
+          <h2>Genera contenido de práctica en tres pasos</h2>
+        </div>
+
+        <div class="steps__grid">
+          <article class="step-card reveal">
+            <div class="step-card__icon">+</div>
+            <h3>1. Escribe un tema</h3>
+            <p>Elige un asunto como fracciones, gramática, biología o programación.</p>
+          </article>
+
+          <article class="step-card reveal">
+            <div class="step-card__icon">O</div>
+            <h3>2. Deja que la IA lo construya</h3>
+            <p>La plataforma transforma tu idea en ejercicios estructurados y claros.</p>
+          </article>
+
+          <article class="step-card reveal">
+            <div class="step-card__icon">&gt;</div>
+            <h3>3. Comparte y practica</h3>
+            <p>Usa el contenido generado al momento con estudiantes o para autoaprendizaje.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo section" id="demo">
+      <div class="container demo__grid">
+        <div class="section-heading reveal">
+          <p class="section-tag">Demo interactiva</p>
+          <h2>Genera un ejercicio de ejemplo</h2>
+          <p>
+            Escribe un tema y mira cómo la plataforma simula un ejercicio generado por IA con carga visual.
+          </p>
+        </div>
+
+        <!-- Este bloque actúa como demo SPA-like: entrada, estado de carga y resultado dinámico -->
+        <div class="demo-panel reveal">
+          <label class="demo-panel__label" for="topic-input">Tema</label>
+          <div class="demo-panel__controls">
+            <input
+              id="topic-input"
+              class="demo-panel__input"
+              type="text"
+              placeholder="Ejemplo: fotosíntesis, álgebra, verbos en inglés"
+            >
+            <button class="button button--primary" id="generate-btn" type="button">
+              Generar ejercicio
+            </button>
+          </div>
+
+          <div class="demo-loading" id="demo-loading" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Generando ejercicio...</span>
+          </div>
+
+          <div class="demo-result" id="demo-result" aria-live="polite">
+            <p>Tu ejercicio generado aparecerá aquí.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="container contact__grid">
+        <div class="section-heading reveal">
+          <p class="section-tag">Contacto</p>
+          <h2>Lleva la práctica impulsada por IA a tu forma de aprender</h2>
+          <p>
+            Envíanos un mensaje y simularemos un envío correcto con feedback visual fluido.
+          </p>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form">
+          <label for="name">Nombre</label>
+          <input id="name" name="name" type="text" placeholder="Tu nombre" required>
+
+          <label for="email">Correo electrónico</label>
+          <input id="email" name="email" type="email" placeholder="tu@ejemplo.com" required>
+
+          <label for="message">Mensaje</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Cuéntanos cómo quieres usar ejercicios generados por IA"
+            required
+          ></textarea>
+
+          <button class="button button--primary" type="submit">Enviar mensaje</button>
+          <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>&copy; 2026 NeuroLearn AI. Generación inteligente de ejercicios para el aprendizaje moderno.</p>
+      <a href="#hero">Volver arriba</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

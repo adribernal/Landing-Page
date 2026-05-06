@@ -36,6 +36,42 @@ body{
 }
 a{text-decoration:none;color:inherit}
 button,input,textarea{font:inherit}
+body.cursor-on,body.cursor-on *{cursor:none}
+
+#cursor,#trail{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  z-index:120;
+}
+
+#cursor{
+  width:16px;
+  height:16px;
+  background:radial-gradient(circle,#fff,var(--accent),#4ac0ff);
+  box-shadow:0 0 18px rgba(115,226,255,.65);
+}
+
+#trail{
+  width:42px;
+  height:42px;
+  border:1px solid rgba(115,226,255,.45);
+  background:rgba(115,226,255,.08);
+  transition:width .2s,height .2s,border-color .2s,background .2s;
+}
+
+#cursor.show,#trail.show{opacity:1}
+#cursor.active{transform:translate(-50%,-50%) scale(1.2)}
+#trail.active{
+  width:64px;
+  height:64px;
+  border-color:rgba(155,255,177,.55);
+  background:rgba(155,255,177,.1);
+}
 
 #preloader{
   position:fixed;
@@ -196,4 +232,8 @@ textarea{margin:12px 0}
   .hero,.grid,.demo,.form-grid{grid-template-columns:1fr}
   .nav__inner{flex-direction:column}
   .nav__links{justify-content:center}
+}
+
+@media (hover:none),(pointer:coarse){
+  #cursor,#trail{display:none}
 }

@@ -8,6 +8,8 @@ const result=document.getElementById("result");
 const form=document.getElementById("form");
 const formMsg=document.getElementById("formMsg");
 const revealItems=document.querySelectorAll(".reveal");
+const cursor=document.getElementById("cursor");
+const trail=document.getElementById("trail");
 
 const examples={
   algebra:[
@@ -39,6 +41,8 @@ if(localStorage.getItem("theme")==="light"){
   body.classList.add("light");
   themeBtn.textContent="Modo oscuro";
 }
+
+setupCursor();
 
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -89,3 +93,43 @@ form.addEventListener("submit",async e=>{
 
 function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 function capitalize(text){return text.charAt(0).toUpperCase()+text.slice(1)}
+
+function setupCursor(){
+  if(!window.matchMedia("(hover:hover) and (pointer:fine)").matches)return;
+
+  body.classList.add("cursor-on");
+  let x=window.innerWidth/2,y=window.innerHeight/2,tx=x,ty=y;
+
+  window.addEventListener("mousemove",e=>{
+    x=e.clientX;
+    y=e.clientY;
+    cursor.style.left=x+"px";
+    cursor.style.top=y+"px";
+    cursor.classList.add("show");
+    trail.classList.add("show");
+  });
+
+  window.addEventListener("mouseout",()=>{
+    cursor.classList.remove("show");
+    trail.classList.remove("show");
+  });
+
+  document.querySelectorAll("a,button,input,textarea").forEach(el=>{
+    el.addEventListener("mouseenter",()=>{
+      cursor.classList.add("active");
+      trail.classList.add("active");
+    });
+    el.addEventListener("mouseleave",()=>{
+      cursor.classList.remove("active");
+      trail.classList.remove("active");
+    });
+  });
+
+  (function animateTrail(){
+    tx+=(x-tx)*0.16;
+    ty+=(y-ty)*0.16;
+    trail.style.left=tx+"px";
+    trail.style.top=ty+"px";
+    requestAnimationFrame(animateTrail);
+  })();
+}

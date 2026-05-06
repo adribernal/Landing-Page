@@ -3,36 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NeuroLearn AI - Parte 1</title>
+  <title>NeuroLearn AI</title>
+  <meta name="description" content="Plataforma educativa con IA para generar ejercicios automaticamente.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Landing muy basica para la primera parte -->
-  <header>
-    <h1>NeuroLearn AI</h1>
-    <button id="themeBtn">Cambiar tema</button>
+  <div id="preloader">
+    <div class="spinner spinner--big"></div>
+    <p>Cargando plataforma...</p>
+  </div>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <strong class="brand">NeuroLearn AI</strong>
+      <nav class="nav__links">
+        <a href="#features">Funciones</a>
+        <a href="#steps">Como funciona</a>
+        <a href="#demo">Demo</a>
+        <a href="#contact">Contacto</a>
+      </nav>
+      <button id="themeBtn" type="button">Modo claro</button>
+    </div>
   </header>
 
-  <main>
-    <section>
-      <h2>Aprende con IA</h2>
-      <p>Esta es la primera parte de la landing. Todavia es simple y con poco diseño.</p>
-      <a href="#info">Ver mas</a>
+  <main class="container">
+    <section class="hero reveal">
+      <div class="hero__content">
+        <p class="tag">Aprendizaje con IA</p>
+        <h1>Genera ejercicios en segundos para cualquier tema</h1>
+        <p>
+          Una landing responsive para una plataforma educativa que crea actividades,
+          preguntas y ejercicios de practica automaticamente.
+        </p>
+        <div class="hero__actions">
+          <a class="btn" href="#demo">Probar demo</a>
+          <a class="btn btn--ghost" href="#contact">Contactar</a>
+        </div>
+      </div>
+
+      <aside class="panel reveal">
+        <h2>Ejemplo rapido</h2>
+        <p>Tema: algebra</p>
+        <ul>
+          <li>Resolver ecuaciones</li>
+          <li>Crear preguntas cortas</li>
+          <li>Adaptar dificultad</li>
+        </ul>
+      </aside>
     </section>
 
-    <section id="info">
-      <h2>Que hace la plataforma</h2>
-      <p>Genera ejercicios automaticamente a partir de un tema escrito por el usuario.</p>
+    <section id="features" class="section">
+      <div class="section__head reveal">
+        <p class="tag">Funciones</p>
+        <h2>Una herramienta pensada para estudiar mejor</h2>
+      </div>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Generacion instantanea</h3>
+          <p>Escribes un tema y la plataforma crea ejercicios en pocos segundos.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Dificultad flexible</h3>
+          <p>Los ejercicios pueden adaptarse a distintos niveles.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Responsive</h3>
+          <p>La pagina se adapta a movil, tablet y escritorio.</p>
+        </article>
+      </div>
     </section>
 
-    <section>
-      <h2>Contacto</h2>
-      <p>Mas adelante aqui habra un formulario.</p>
+    <section id="steps" class="section">
+      <div class="section__head reveal">
+        <p class="tag">Como funciona</p>
+        <h2>Tres pasos sencillos</h2>
+      </div>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>1. Escribe un tema</h3>
+          <p>Por ejemplo algebra, fotosintesis o verbos en ingles.</p>
+        </article>
+        <article class="card reveal">
+          <h3>2. Genera el ejercicio</h3>
+          <p>La demo simula una respuesta automatica para mostrar la experiencia.</p>
+        </article>
+        <article class="card reveal">
+          <h3>3. Practica</h3>
+          <p>Obtienes contenido listo para estudiar o repasar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo" class="section card reveal">
+      <div class="section__head">
+        <p class="tag">Demo</p>
+        <h2>Prueba el generador</h2>
+      </div>
+      <label for="topic">Tema</label>
+      <div class="demo">
+        <input id="topic" type="text" placeholder="Ejemplo: fotosintesis">
+        <button id="generate" class="btn" type="button">Generar ejercicio</button>
+      </div>
+      <div id="loading" class="loading" hidden>
+        <div class="spinner"></div>
+        <span>Generando ejercicio...</span>
+      </div>
+      <div id="result" class="result">Tu ejercicio aparecera aqui.</div>
+    </section>
+
+    <section id="contact" class="section card reveal">
+      <div class="section__head">
+        <p class="tag">Contacto</p>
+        <h2>Habla con nosotros</h2>
+        <p>El envio del formulario esta simulado para mostrar como responderia un back-end.</p>
+      </div>
+      <form id="form">
+        <div class="form-grid">
+          <input name="name" type="text" placeholder="Nombre" required>
+          <input name="email" type="email" placeholder="Correo electronico" required>
+        </div>
+        <textarea name="message" rows="5" placeholder="Escribe tu mensaje" required></textarea>
+        <button class="btn" type="submit">Enviar</button>
+        <p id="formMsg"></p>
+      </form>
     </section>
   </main>
 
-  <footer>
-    <p>Parte 1 del proyecto</p>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 NeuroLearn AI</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

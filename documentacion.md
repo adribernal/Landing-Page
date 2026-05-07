@@ -2,19 +2,23 @@
 
 ## 1. Instrucciones de inicio/ejecucion de vuestra web
 
-Para ejecutar la web no hace falta instalar dependencias ni levantar un servidor.
+Para ejecutar la web hace falta iniciar el servidor `server.js`.
 
 Pasos:
 
 1. Abrir la carpeta del proyecto.
-2. Abrir el archivo `index.html` en un navegador.
-3. Interactuar con la pagina normalmente.
+2. Abrir una terminal en la carpeta del proyecto.
+3. Ejecutar el comando `node server.js`.
+4. Abrir un navegador y entrar en `http://localhost:3000`.
+5. Interactuar con la pagina normalmente.
 
 Archivos principales del proyecto:
 
 - `index.html`: estructura de la landing page.
 - `styles.css`: estilos visuales y responsive.
 - `script.js`: funcionalidades e interacciones.
+- `server.js`: servidor backend que recibe el formulario.
+- `mensajes.json`: archivo que actua como modelo de datos.
 
 ## 2. Enumeracion de al menos las 5 funcionalidades mas importantes implementadas
 
@@ -27,7 +31,7 @@ Archivos principales del proyecto:
 Funcionalidades adicionales que tambien existen:
 
 - Preloader inicial.
-- Formulario con envio simulado.
+- Formulario conectado al backend.
 - Guardado del tema con `localStorage`.
 - Hover effects en botones, tarjetas y enlaces.
 
@@ -579,43 +583,55 @@ Explicacion:
 
 ## 9. Funcionalidad Backend
 
-Actualmente el proyecto **no tiene backend real**.
+Actualmente el proyecto **si tiene backend real**.
 
-La logica equivalente esta simulada en el front-end mediante JavaScript para el formulario de contacto.
+El backend esta implementado en `server.js` y guarda los datos del formulario en `mensajes.json`.
 
 ### 9.1. Descripcion por escrito del comportamiento de la funcionalidad backend
 
-La funcionalidad backend simulada permite que el formulario:
+La funcionalidad backend permite que el formulario:
 
 - no recargue la pagina
 - valide campos
-- muestre mensajes de envio
+- envie los datos al servidor
+- guarde esos datos en un modelo de datos JSON
 - muestre un resultado final de exito o error
 
 ### 9.2. Explicacion del funcionamiento de la funcionalidad backend
 
-El formulario usa `preventDefault()` para cancelar el envio tradicional.
+El flujo del backend es el siguiente:
 
-Despues:
+1. El formulario usa `preventDefault()` para evitar el envio tradicional.
+2. `script.js` recoge los datos del formulario.
+3. `script.js` envia esos datos al servidor mediante `fetch("/api/contact")`.
+4. `server.js` recibe la peticion `POST`.
+5. El servidor convierte el contenido recibido en un objeto JavaScript.
+6. El servidor valida nombre, email y mensaje.
+7. Si los datos son correctos, los guarda en `mensajes.json`.
+8. El servidor devuelve una respuesta JSON al navegador.
+9. El front-end muestra el mensaje recibido y, si todo ha ido bien, limpia el formulario.
 
-1. se recogen los datos con `FormData`
-2. se muestra el mensaje `Enviando mensaje...`
-3. se hace una espera artificial con `wait(1000)`
-4. se valida si nombre, email y mensaje son correctos
-5. se muestra el mensaje final
+Por tanto, aqui si existe:
 
-Esto simula el comportamiento que tendria un backend, pero todo ocurre en el navegador.
+- un servidor real
+- una peticion HTTP real
+- un almacenamiento persistente en un archivo `.json`
 
 ### 9.3. Fragmentos de codigo mas relevantes de la funcionalidad backend
 
-Fragmento de `script.js`:
+Fragmento de `script.js` para enviar datos al servidor:
 
 ```js
 form.addEventListener("submit", async e => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(form).entries());
-  formMsg.textContent = "Enviando mensaje...";
-  await wait(1000);
+  formMsg.textContent = "Enviando mensaje al servidor...";
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(data)
+  });
 ```
 
 Explicacion:
@@ -624,36 +640,74 @@ Explicacion:
 - `preventDefault()` evita la recarga de la pagina.
 - `new FormData(form)` recoge los campos del formulario.
 - `Object.fromEntries(...)` convierte esos datos en un objeto JavaScript.
-- `await wait(1000)` simula el tiempo de respuesta de un servidor.
+- `fetch("/api/contact")` hace una peticion HTTP al backend.
+- `method: "POST"` indica que se estan enviando datos.
+- `headers` indica que el cuerpo se manda en formato JSON.
+- `JSON.stringify(data)` convierte el objeto JavaScript en texto JSON para enviarlo.
 
-Fragmento de `script.js`:
+Fragmento de `server.js` para recibir y validar la peticion:
 
 ```js
-const valid = data.name &&
-  String(data.email || "").includes("@") &&
-  String(data.message || "").trim().length >= 5;
+if(req.method==="POST"&&req.url==="/api/contact"){
+  let body="";
+  req.on("data",chunk=>body+=chunk);
+  req.on("end",()=>{
+    const data=JSON.parse(body||"{}");
+    const valid=data.name&&String(data.email||"").includes("@")&&String(data.message||"").trim().length>=5;
 ```
 
 Explicacion:
 
-- `data.name` comprueba que exista un nombre.
-- `String(data.email || "").includes("@")` comprueba de forma basica que el email tenga `@`.
-- `trim().length >= 5` exige que el mensaje tenga al menos 5 caracteres utiles.
+- `req.method==="POST"` comprueba que la peticion sea de envio de datos.
+- `req.url==="/api/contact"` comprueba que la ruta sea la del formulario.
+- `req.on("data",...)` va acumulando los fragmentos recibidos en el cuerpo de la peticion.
+- `req.on("end",...)` se ejecuta cuando ya se ha recibido todo el contenido.
+- `JSON.parse(body||"{}")` transforma el texto JSON recibido en un objeto JavaScript.
+- `valid` comprueba que nombre, email y mensaje cumplan las condiciones minimas.
 
-Fragmento de `script.js`:
+Fragmento de `server.js` para guardar datos en el modelo JSON:
 
 ```js
-formMsg.textContent = valid
-  ? `Mensaje enviado correctamente, ${data.name}.`
-  : "Revisa los datos del formulario.";
-
-if(valid) form.reset();
+function saveMessage(data){
+  const current=JSON.parse(fs.readFileSync(dbPath,"utf8"));
+  current.push({
+    id:Date.now(),
+    name:data.name,
+    email:data.email,
+    message:data.message,
+    createdAt:new Date().toISOString()
+  });
+  fs.writeFileSync(dbPath,JSON.stringify(current,null,2),"utf8");
+}
 ```
 
 Explicacion:
 
-- el operador ternario `condicion ? valor1 : valor2` devuelve un texto u otro segun si `valid` es verdadero o falso.
-- `form.reset()` limpia los campos solo si la validacion ha sido correcta.
+- `fs.readFileSync(dbPath,"utf8")` lee el contenido actual del archivo `mensajes.json`.
+- `JSON.parse(...)` convierte ese contenido en un array de JavaScript.
+- `current.push(...)` añade un nuevo objeto con los datos del formulario.
+- `Date.now()` crea un identificador numerico sencillo.
+- `new Date().toISOString()` guarda la fecha y hora del registro.
+- `fs.writeFileSync(...)` vuelve a escribir el archivo JSON con el nuevo contenido.
+
+Fragmento de `server.js` para responder al cliente:
+
+```js
+if(!valid){
+  sendJson(res,400,{ok:false,message:"Datos no validos."});
+  return;
+}
+
+saveMessage(data);
+sendJson(res,200,{ok:true,message:`Mensaje guardado correctamente, ${data.name}.`});
+```
+
+Explicacion:
+
+- `sendJson(...)` es una funcion auxiliar para responder en formato JSON.
+- el codigo `400` indica error de validacion.
+- el codigo `200` indica que la operacion ha sido correcta.
+- si los datos son validos, primero se guardan y despues se responde al cliente.
 
 ## 10. Responsividad
 

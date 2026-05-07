@@ -80,15 +80,20 @@ generate.addEventListener("click",async()=>{
 form.addEventListener("submit",async e=>{
   e.preventDefault();
   const data=Object.fromEntries(new FormData(form).entries());
-  formMsg.textContent="Enviando mensaje...";
-  await wait(1000);
+  formMsg.textContent="Enviando mensaje al servidor...";
 
-  const valid=data.name&&String(data.email||"").includes("@")&&String(data.message||"").trim().length>=5;
-  formMsg.textContent=valid
-    ?`Mensaje enviado correctamente, ${data.name}.`
-    :"Revisa los datos del formulario.";
-
-  if(valid)form.reset();
+  try{
+    const res=await fetch("/api/contact",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
+    });
+    const json=await res.json();
+    formMsg.textContent=json.message;
+    if(json.ok)form.reset();
+  }catch{
+    formMsg.textContent="No se pudo conectar con el servidor.";
+  }
 });
 
 function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
